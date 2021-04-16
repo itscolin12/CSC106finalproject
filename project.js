@@ -76,5 +76,62 @@ drawClub(x,y);
 drawClub(x+-48,y+84);
 drawBitmoji(x+109,y+131,30);
 };
-drawFaceClubCard(97,100);
+
+
+
+
+
+//HOME SCREEN
+
+
+
+var Screen = 1;
+
+
+
+
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 97;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+};
+
+Button.prototype.draw = function() {
+    fill(232, 102, 102);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(19);
+    textAlign(LEFT, TOP);
+    text(this.label, this.x+10, this.y+this.height/4);
+};
+
+var btn1 = new Button({
+    x: 31,
+    y: 238,
+    label: "   Play!"
+});
+
+
+
+var btn2 = new Button({
+   
+    x: 215,
+    y: 238,
+    label: "  Rules"
+});
+
+
+draw = function() {
+     if(Screen === 1) {
+         background(188, 230, 245);
+         fill(0, 0, 0);
+         textSize(48);
+         text("Blackjack",98,70);
+         fill(0,0,0);
+        
+          btn1.draw();
+          btn2.draw();
+     }};
 
