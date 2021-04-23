@@ -81,7 +81,7 @@ drawBitmoji(x+109,y+131,30);
 
 
 
-//HOME SCREEN
+//Rule SCREEN 1
 
 
 
@@ -135,3 +135,62 @@ draw = function() {
           btn2.draw();
      }};
 
+var Screen = 1;
+
+
+
+
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 147;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+};
+
+Button.prototype.draw = function() {
+    fill(232, 102, 102);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(19);
+    textAlign(LEFT, TOP);
+    text(this.label, this.x+10, this.y+this.height/4);
+};
+
+var btn1 = new Button({
+    x: 3,
+    y: 338,
+    label: "Return to game"
+});
+
+var btn2 = new Button({
+    x: 247,
+    y: 338,
+    label: "   More Rules"
+});
+
+
+
+draw = function() {
+     if(Screen === 1) {
+         background(188, 230, 245);
+         fill(0, 0, 0);
+         textSize(48);
+         text("Rules",142,5);
+         fill(0,0,0);
+         textSize(15);
+         text("The goal of blackjack is to beat the dealer's hand without", 10, 60);
+         text("going over 21", 10, 80);
+         text("Face cards are worth 10", 10, 111);
+         text("Aces are worth 1 or 11 whichever makes a better hand", 10, 146); 
+         text("Each player starts with two cards one of the dealer's cards", 10, 178);
+         text("is hidden until the end", 10, 197);  
+         text("To 'Hit' is to ask for another card.", 10, 230); 
+         text("To 'Stand' is to hold your total and end your turn.", 10, 260);
+         text("If you go over 21 you bust and the dealer wins regardless", 10, 290);
+         text("of the dealer's hand", 10, 310);
+
+        
+          btn1.draw();
+          btn2.draw();
+     }};
