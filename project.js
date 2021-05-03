@@ -194,3 +194,63 @@ draw = function() {
           btn1.draw();
           btn2.draw();
      }};
+
+var Screen = 2;
+
+
+
+
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 147;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+};
+
+Button.prototype.draw = function() {
+    fill(232, 102, 102);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(19);
+    textAlign(LEFT, TOP);
+    text(this.label, this.x+10, this.y+this.height/4);
+};
+
+var btn1 = new Button({
+    x: 3,
+    y: 338,
+    label: "Return to game"
+});
+
+var btn2 = new Button({
+    x: 247,
+    y: 338,
+    label: "        Play"
+});
+
+
+
+draw = function() {
+     if(Screen === 2) {
+         background(188, 230, 245);
+         fill(0, 0, 0);
+         textSize(48);
+         text("Rules",142,5);
+         fill(0,0,0);
+         textSize(15);
+         text("If you are dealt 21 from the start (Ace & 10), you got", 10, 60);
+         text("a blackjack", 10, 80);
+         text("Blackjack means you win 1.5 the amount of your bet", 10, 111);
+         text("Dealer will hit until his/her cards total 17 or higher", 10, 146); 
+         text("Doubling is like a hit, only the bet is doubled and you", 10, 178);
+         text("only get one more card", 10, 197);  
+         text("Split can be done when you have two of the same card ", 10, 230); 
+         text("- the pair is split into two hands", 10, 250);
+         text("Splitting also doubles the bet, because each new hand", 10, 282);
+         text("is worth the original bet", 10, 301);
+
+        
+          btn1.draw();
+          btn2.draw();
+     }};
