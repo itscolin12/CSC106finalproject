@@ -114,10 +114,126 @@ drawClub(x+-25,y+42);
 };
 
 
+//Heart + Diamonds + Steven Bitmoji
+
+var drawFace2=function(bodyX,bodyY,h){
+
+    noStroke();
+    fill(238, 207, 180);
+    rect(bodyX+(h/100)*26,bodyY+(h/100)*152,(h/100)*40,(h/100)*30);
+    ellipse(bodyX+(h/100)*46,bodyY+(h/100)*119,(h/100)*97,(h/100)*114);//Head
+    fill(255, 255, 255);
+    strokeWeight(2);
+    stroke(222, 22, 22);
+    fill(255, 255, 255);
+    arc(bodyX+(h/100)*46,bodyY+(h/100)*144,(h/100)*45,(h/100)*20,0,180);//mouth
+    stroke(3, 3, 3);
+    noFill();
+    beginShape();
+    vertex(bodyX+(h/91)*38,bodyY+(h/100)*128);
+    bezierVertex(bodyX+(h/100)*65,bodyY+(h/100)*144,bodyX+(h/100)*45,bodyY+(h/100)*113,bodyX+(h/100)*45,bodyY-(h/100)*-108);//nose
+    endShape();
+    fill(255, 255, 255);
+    stroke(255, 255, 255);
+    strokeWeight(1);
+    stroke(1,1,1);
+    fill(238, 207, 180);
+    arc(bodyX+(h/100)*46,bodyY+(h/100)*164,(h/100)*23,(h/100)*13,0,180);//chin
+};
+var drawEyes2=function(bodyX,bodyY,h){
+    noStroke();
+    fill(255,255,255);
+    ellipse(bodyX+(h/100)*27,bodyY+(h/100)*100,(h/100)*16,(h/100)*13);//left Eye
+    ellipse(bodyX+(h/100)*63,bodyY+(h/100)*100,(h/100)*16,(h/100)*13);//Right Eye
+    strokeWeight(2);
+    stroke(176, 87, 9);
+    fill(3, 3, 3);
+    ellipse(bodyX+(h/100)*27,bodyY+(h/100)*100,(h/100)*5,(h/100)*5);//left Pupil
+    ellipse(bodyX+(h/100)*63,bodyY+(h/100)*100,(h/100)*5,(h/100)*5);//right pupil
+    strokeWeight(0.6);//eye lashes
+    line(bodyX+(h/100)*70,bodyY+(h/100)*91,bodyX+(h/100)*67,bodyY+(h/100)*95);//lash
+    line(bodyX+(h/100)*67,bodyY+(h/100)*90,bodyX+(h/100)*65,bodyY+(h/100)*95);//lash
+    line(bodyX+(h/100)*64,bodyY+(h/100)*89,bodyX+(h/100)*63,bodyY+(h/100)*95);//lash
+    line(bodyX+(h/100)*61,bodyY+(h/100)*89,bodyX+(h/100)*61,bodyY+(h/100)*94);//lash
+    line(bodyX+(h/100)*57,bodyY+(h/100)*90,bodyX+(h/100)*59,bodyY+(h/100)*95);//lash
+    line(bodyX+(h/100)*33,bodyY+(h/100)*90,bodyX+(h/100)*31,bodyY+(h/100)*95);//lash
+    line(bodyX+(h/100)*31,bodyY+(h/100)*89,bodyX+(h/100)*29,bodyY+(h/100)*95);//lash
+    line(bodyX+(h/100)*29,bodyY+(h/100)*89,bodyX+(h/100)*28,bodyY+(h/100)*94);//lash
+    line(bodyX+(h/100)*21,bodyY+(h/100)*90,bodyX+(h/100)*23,bodyY+(h/100)*95);//lash
+    line(bodyX+(h/100)*25,bodyY+(h/100)*89,bodyX+(h/100)*26,bodyY+(h/100)*94);//lash
+};
+var drawHair2=function(bodyX,bodyY,h){
+    fill(166, 111, 0);
+    quad(bodyX+(h/100)*9,bodyY+(h/100)*130,bodyX+(h/100)*-7,bodyY+(h/100)*130,bodyX+(h/100)*8,bodyY+(h/100)*78,bodyX+(h/100)*22,bodyY+(h/100)*72);//left hair
+    quad(bodyX+(h/100)*102,bodyY+(h/100)*130,bodyX+(h/100)*87,bodyY+(h/100)*130,bodyX+(h/100)*71,bodyY+(h/100)*72,bodyX+(h/100)*83,bodyY+(h/100)*78);//right     hair
+    ellipse(bodyX+(h/100)*46,bodyY+(h/100)*73,(h/100)*80,(h/100)*35);//top hair
+    stroke(1, 1, 1);
+    fill(255, 0, 0);
+    rect(bodyX+(h/100)*-5,bodyY+(h/100)*72,(h/100)*100,(h/100)*20);//headband
+    fill(1,1,1);
+    textSize((h/100)*12);
+    text("WASSY",bodyX+(h/100)*25,bodyY+(h/100)*75);
+};
+var drawBody2=function(bodyX,bodyY,h){
+    fill(1,1,1);
+    quad(bodyX+(h/100)*121,bodyY+(h/100)*206,bodyX+(h/100)*96,bodyY+(h/100)*174,bodyX+(h/100)*46,bodyY+(h/100)*182,bodyX+(h/100)*46,bodyY+(h/100)*206);//left shoulder
+    quad(bodyX+(h/100)*46,bodyY+(h/100)*206,bodyX+(h/100)*46,bodyY+(h/100)*182,bodyX+(h/100)*4,bodyY+(h/100)*174,bodyX+(h/100)*-26,bodyY+(h/100)*206);//right            shoulder
+    strokeWeight(5);
+    stroke(153, 150, 150);
+    arc(bodyX+(h/100)*47,bodyY+(h/100)*179,(h/100)*48,(h/100)*22,0,180);//necklace
+    fill(255,255,255);
+    textSize((h/100)*13);
+    text("SW",bodyX+(h/100)*-8,bodyY+(h/100)*188,(h/100)*200,(h/100)*48);
+};
+var drawBitmoji2=function(bodyX,bodyY,h){
+    drawFace2(bodyX,bodyY,h);
+    drawEyes2(bodyX,bodyY,h);
+    drawHair2(bodyX,bodyY,h);
+    drawBody2(bodyX,bodyY,h);
+};
+
+var drawHeart = function(x,y){
+    image(getImage("space/healthheart"), 166, 105, 15, 15);
+    image(getImage("space/healthheart"), 114, 191, 15, 15);
+};
+
+var drawFaceHeartCard = function (x,y){
+rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+fill(255, 0, 0);
+text(this.cardValue,x+108,y+123);
+text(this.cardValue,x+158,y+203);
+drawHeart(x,y);
+drawHeart(x+-48,y+84);
+drawBitmoji2(x+119,y+106,37);
+};
+
+var drawDiamond = function(x,y){
+    fill(255, 0, 0);
+    triangle(176, 103, 180, 111, 172, 111);
+    triangle(176, 119, 180, 111, 172, 111);
+    triangle(119, 191, 123, 199, 115, 199);
+    triangle(119, 207, 123, 199, 115, 199);
+};
+
+var drawFaceDiamondCard = function (x,y){
+rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+fill(255, 0, 0);
+text(this.cardValue,x+108,y+123);
+text(this.cardValue,x+158,y+203);
+drawDiamond(x,y);
+drawDiamond(x+-48,y+84);
+drawBitmoji2(x+119,y+108,37);
+};
+
+drawFaceHeartCard(10,0);
 
 
 
-
+//Rules Page
 
 var Screen = 1;
 
