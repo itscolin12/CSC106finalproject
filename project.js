@@ -52,6 +52,12 @@ var drawBitmoji= function(x,y,bitmojiHeight){
      drawHead(x,y,bitmojiHeight);
      drawBody(x,y,bitmojiHeight);
 };
+var drawSpade = function(x,y){
+fill(0,0,0);
+ellipse(x-47,y-51,12,15);
+triangle(x-53,y-54,x-47,y-69,x-41,y-55);
+triangle(x-51,y-37,x-47,y-47,x-42,y-37);
+};
 
 var drawClub = function(x,y){
     ellipse(x+165,y+114,9,9);
@@ -76,6 +82,38 @@ drawClub(x,y);
 drawClub(x+-48,y+84);
 drawBitmoji(x+109,y+131,30);
 };
+
+var drawFaceSpadeCard = function (x,y){
+rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+text(this.cardValue,x+108,y+123);
+text(this.cardValue,x+158,y+203);
+drawSpade(x+211,y+172);
+drawSpade(x+157,y+241);
+drawBitmoji(x+113,y+131,27);
+};
+
+
+var drawSpadeCard = function (x,y){
+rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+text(this.cardValue,x+108,y+123);
+text(this.cardValue,x+158,y+203);
+drawSpade(x+185,y+202);
+};
+
+var drawClubCard = function (x,y) {
+rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+text(this.cardValue,x+108,y+123);
+text(this.cardValue,x+158,y+203);
+drawClub(x+-25,y+42);
+};
+
+
 
 
 
