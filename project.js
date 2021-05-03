@@ -119,24 +119,21 @@ drawClub(x+-25,y+42);
 
 
 
-//Rule SCREEN 1
-
-
-
 var Screen = 1;
 
 
 
-
-var Button = function(config) {
+var Button = function(config) { //constructor function for my buttons
     this.x = config.x || 0;
     this.y = config.y || 0;
-    this.width = config.width || 97;
-    this.height = config.height || 50;
+    this.width = config.width || 120;
+    this.height = config.height || 45;
     this.label = config.label || "Click";
+    this.onClick = config.onClick || function(){};
 };
 
-Button.prototype.draw = function() {
+Button.prototype.draw = function() { //draw method for my button constructor function
+    strokeWeight(0.5);
     fill(232, 102, 102);
     rect(this.x, this.y, this.width, this.height, 5);
     fill(0, 0, 0);
@@ -145,73 +142,69 @@ Button.prototype.draw = function() {
     text(this.label, this.x+10, this.y+this.height/4);
 };
 
-var btn1 = new Button({
-    x: 31,
-    y: 238,
-    label: "   Play!"
-});
+Button.prototype.isMouseInside = function(){ //method for button to ensure that mouse is inside of it
+    return mouseX > this.x &&
+           mouseX < (this.width + this.x) &&
+           mouseY > this.y &&
+           mouseY < (this.height + this.y);
+};
 
-
-
-var btn2 = new Button({
-   
-    x: 215,
-    y: 238,
-    label: "  Rules"
-});
-
-
-draw = function() {
-     if(Screen === 1) {
-         background(188, 230, 245);
-         fill(0, 0, 0);
-         textSize(48);
-         text("Blackjack",98,70);
-         fill(0,0,0);
+Button.prototype.useMouseClick = function() { //mehtod to enable us to click the button once it is created
+    if (this.isMouseInside()){
         
-          btn1.draw();
-          btn2.draw();
-     }};
-
-var Screen = 1;
-
-
-
-
-var Button = function(config) {
-    this.x = config.x || 0;
-    this.y = config.y || 0;
-    this.width = config.width || 147;
-    this.height = config.height || 50;
-    this.label = config.label || "Click";
+        this.onClick();
+        
+    }
 };
 
-Button.prototype.draw = function() {
-    fill(232, 102, 102);
-    rect(this.x, this.y, this.width, this.height, 5);
-    fill(0, 0, 0);
-    textSize(19);
-    textAlign(LEFT, TOP);
-    text(this.label, this.x+10, this.y+this.height/4);
+var button1 = new Button({ //creates by button to play
+    x: 13,
+    y: 345,
+    label: "     Back",
+    onClick: function(){
+        Screen = 0;
+    }
+});
+
+var button2 = new Button({ //creates by button to play
+    x: 274,
+    y: 347,
+    label: "More Rules",
+    onClick: function(){
+        Screen = 2;
+    }
+});
+
+var button3 = new Button({ //creates by button to play
+    x: 13,
+    y: 10,
+    label: "     Back",
+    onClick: function(){
+        Screen = 1;
+    }
+});
+
+var button4 = new Button({ //creates by button to play
+    x: 146,
+    y: 347,
+    label: "Begin Game",
+    onClick: function(){
+        Screen = 3;
+    }
+});
+
+mouseClicked = function() { //This makes it so everytime I click within the parameters given it will take us to level 1
+    
+    button1.useMouseClick();
+    button2.useMouseClick();
+    button3.useMouseClick();
+    button4.useMouseClick();
+    
+
 };
 
-var btn1 = new Button({
-    x: 3,
-    y: 338,
-    label: "Return to game"
-});
-
-var btn2 = new Button({
-    x: 247,
-    y: 338,
-    label: "   More Rules"
-});
-
-
-
-draw = function() {
-     if(Screen === 1) {
-         background(188, 230, 245);
+var rulePage1 = function(){
+    background(188, 230, 245);
          fill(0, 0, 0);
          textSize(48);
          text("Rules",142,5);
@@ -228,67 +221,39 @@ draw = function() {
          text("If you go over 21 you bust and the dealer wins regardless", 10, 290);
          text("of the dealer's hand", 10, 310);
 
-        
-          btn1.draw();
-          btn2.draw();
-     }};
-
-var Screen = 2;
-
-
-
-
-var Button = function(config) {
-    this.x = config.x || 0;
-    this.y = config.y || 0;
-    this.width = config.width || 147;
-    this.height = config.height || 50;
-    this.label = config.label || "Click";
+        button1.draw();
+        button2.draw();
 };
 
-Button.prototype.draw = function() {
-    fill(232, 102, 102);
-    rect(this.x, this.y, this.width, this.height, 5);
-    fill(0, 0, 0);
-    textSize(19);
-    textAlign(LEFT, TOP);
-    text(this.label, this.x+10, this.y+this.height/4);
-};
-
-var btn1 = new Button({
-    x: 3,
-    y: 338,
-    label: "Return to game"
-});
-
-var btn2 = new Button({
-    x: 247,
-    y: 338,
-    label: "        Play"
-});
-
-
-
-draw = function() {
-     if(Screen === 2) {
+var rulePage2 = function(){
          background(188, 230, 245);
          fill(0, 0, 0);
          textSize(48);
          text("Rules",142,5);
          fill(0,0,0);
          textSize(15);
-         text("If you are dealt 21 from the start (Ace & 10), you got", 10, 60);
-         text("a blackjack", 10, 80);
-         text("Blackjack means you win 1.5 the amount of your bet", 10, 111);
-         text("Dealer will hit until his/her cards total 17 or higher", 10, 146); 
-         text("Doubling is like a hit, only the bet is doubled and you", 10, 178);
-         text("only get one more card", 10, 197);  
-         text("Split can be done when you have two of the same card ", 10, 230); 
-         text("- the pair is split into two hands", 10, 250);
-         text("Splitting also doubles the bet, because each new hand", 10, 282);
-         text("is worth the original bet", 10, 301);
+         text("If you are dealt 21 from the start (Ace & 10), you got", 10, 90);
+         text("a blackjack", 10, 110);
+         text("Blackjack means you win 1.5 the amount of your bet", 10, 153);
+         text("Dealer will hit until his/her cards total 17 or higher", 10, 204); 
+         text("Doubling is like a hit, only the bet is doubled and you", 10, 255);
+         text("only get one more card", 10, 275); 
+         
+         button3.draw();
+         button4.draw();
+};
 
+
+draw = function() {
+     if(Screen === 1) {
+         rulePage1();
+     }
         
-          btn1.draw();
-          btn2.draw();
-     }};
+     if(Screen === 2) {
+ 
+         rulePage2();
+
+     }
+     };
+
+
