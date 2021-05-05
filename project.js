@@ -309,6 +309,17 @@ var button4 = new Button({ //creates by button to play
     }
 });
 
+var button5 = new Button({
+    x: 271,
+    y:23,
+    label: "      Rules",
+    onClick: function(){
+        Screen = 1;
+    }
+});
+
+
+
 mouseClicked = function() { //This makes it so everytime I click within the parameters given it will take us to level 1
     
     button1.useMouseClick();
@@ -318,6 +329,27 @@ mouseClicked = function() { //This makes it so everytime I click within the para
     
 
 };
+var startScreen = function(){
+    background(90, 224, 121);
+        fill(217, 4, 4);
+        textSize(47);
+        text("BlackJack",32,24);
+        textSize(24);
+        fill(0,0,0);
+        text("By: Colin Gallagher ", 51, 96);
+        text("and Steven Wasserman",51,127);
+        noStroke();
+        drawBitmoji(19,206,63);
+        drawBitmoji2(296,151,79);
+        button4.draw();
+        button5.draw();
+         noStroke();
+        drawSpade(x+110,y+170);
+        drawClub(x-97,y+90);
+       image(getImage("space/healthheart"), 225, 206, 24, 24);
+       drawDiamond2(165,290);
+};
+    
 
 var rulePage1 = function(){
     background(188, 230, 245);
@@ -361,6 +393,10 @@ var rulePage2 = function(){
 
 
 draw = function() {
+    if (Screen === 0){
+        startScreen();  
+    }
+    
      if(Screen === 1) {
          rulePage1();
      }
