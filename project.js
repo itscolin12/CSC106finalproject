@@ -326,6 +326,7 @@ mouseClicked = function() { //This makes it so everytime I click within the para
     button2.useMouseClick();
     button3.useMouseClick();
     button4.useMouseClick();
+    button5.useMouseClick();
     
 
 };
