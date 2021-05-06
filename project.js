@@ -1,3 +1,5 @@
+var Screen = 0;
+
 var drawBody = function(x,y,bitmojiHeight){
 var p = bitmojiHeight/100;
 fill(0, 0, 0);// shirt color
@@ -26,9 +28,9 @@ ellipse(x+93*(bitmojiHeight/100),y+69*(bitmojiHeight/100),89*(bitmojiHeight/100)
 fill(250, 231, 175);
 ellipse(x+93*(bitmojiHeight/100),y+68*(bitmojiHeight/100),42*(bitmojiHeight/100),38*(bitmojiHeight/100));//neck
 ellipse(x+93*(bitmojiHeight/100),y+20*(bitmojiHeight/100),80*(bitmojiHeight/100),100*(bitmojiHeight/100)); //head
-fill(235, 235, 188);
-arc(x+94*(bitmojiHeight/100),y-11*(bitmojiHeight/100), 72*(bitmojiHeight/100), -85*(bitmojiHeight/100), -2*(bitmojiHeight/100), 268*(bitmojiHeight/100));//hat
-ellipse(x+95*(bitmojiHeight/100),y-8*(bitmojiHeight/100),71*(bitmojiHeight/100),31*(bitmojiHeight/100));//hatbase
+fill(5, 5, 5);
+arc(x+93*(bitmojiHeight/100),y-11*(bitmojiHeight/100), 74*(bitmojiHeight/100), -87*(bitmojiHeight/100), 8*(bitmojiHeight/100), 281*(bitmojiHeight/100));//hat
+ellipse(x+93*(bitmojiHeight/100),y-10*(bitmojiHeight/100),75*(bitmojiHeight/100),31*(bitmojiHeight/86));//hatbase
 fill(255, 255, 255);//white for eye
 ellipse(x+76*(bitmojiHeight/100),y+19*(bitmojiHeight/100),16*(bitmojiHeight/100),12*(bitmojiHeight/100));//Eye
 ellipse(x+109*(bitmojiHeight/100),y+19*(bitmojiHeight/100),16*(bitmojiHeight/100),12*(bitmojiHeight/100));//eye
@@ -52,6 +54,7 @@ var drawBitmoji= function(x,y,bitmojiHeight){
      drawHead(x,y,bitmojiHeight);
      drawBody(x,y,bitmojiHeight);
 };
+
 var drawSpade = function(x,y){
 fill(0,0,0);
 ellipse(x-47,y-51,12,15);
@@ -114,7 +117,6 @@ drawClub(x+-25,y+42);
 };
 
 
-//Heart + Diamonds + Steven Bitmoji
 
 var drawFace2=function(bodyX,bodyY,h){
 
@@ -193,8 +195,8 @@ var drawBitmoji2=function(bodyX,bodyY,h){
 };
 
 var drawHeart = function(x,y){
-    image(getImage("space/healthheart"), 166, 105, 15, 15);
-    image(getImage("space/healthheart"), 114, 191, 15, 15);
+    image(getImage("space/healthheart"), x+66, x+5, 15, 15);
+    image(getImage("space/healthheart"), x+14, x+91, 15, 15);
 };
 
 var drawFaceHeartCard = function (x,y){
@@ -211,11 +213,18 @@ drawBitmoji2(x+119,y+106,37);
 
 var drawDiamond = function(x,y){
     fill(255, 0, 0);
-    triangle(176, 103, 180, 111, 172, 111);
-    triangle(176, 119, 180, 111, 172, 111);
-    triangle(119, 191, 123, 199, 115, 199);
-    triangle(119, 207, 123, 199, 115, 199);
+    triangle(x+76, y+03, x+80, y+11, x+72, y+11);
+    triangle(x+76, y+19, x+80, y+11, x+72,y+11);
+    triangle(x+19, y+91, x+23, y+99, x+15, y+99);
+    triangle(x+19,y+107,x+23, y+99, x+15, y+99);
 };
+
+var drawDiamond2 = function(x,y){
+    fill(255, 0, 0);
+    triangle(x+76, y+-3, x+83, y+11, x+69, y+11);
+    triangle(x+76, y+24, x+83, y+11, x+69,y+11);
+};
+
 
 var drawFaceDiamondCard = function (x,y){
 rect(x+100,y+100,74,110,10);
@@ -228,15 +237,6 @@ drawDiamond(x,y);
 drawDiamond(x+-48,y+84);
 drawBitmoji2(x+119,y+108,37);
 };
-
-drawFaceHeartCard(10,0);
-
-
-
-//Rules Page
-
-var Screen = 1;
-
 
 
 var Button = function(config) { //constructor function for my buttons
@@ -274,33 +274,6 @@ Button.prototype.useMouseClick = function() { //mehtod to enable us to click the
 };
 
 var button1 = new Button({ //creates by button to play
-    x: 13,
-    y: 345,
-    label: "     Back",
-    onClick: function(){
-        Screen = 0;
-    }
-});
-
-var button2 = new Button({ //creates by button to play
-    x: 274,
-    y: 347,
-    label: "More Rules",
-    onClick: function(){
-        Screen = 2;
-    }
-});
-
-var button3 = new Button({ //creates by button to play
-    x: 13,
-    y: 10,
-    label: "     Back",
-    onClick: function(){
-        Screen = 1;
-    }
-});
-
-var button4 = new Button({ //creates by button to play
     x: 146,
     y: 347,
     label: "Begin Game",
@@ -309,15 +282,41 @@ var button4 = new Button({ //creates by button to play
     }
 });
 
-var button5 = new Button({
+var button2 = new Button({
     x: 271,
-    y:23,
-    label: "      Rules",
+    y: 23,
+    label: "     Rules",
     onClick: function(){
         Screen = 1;
     }
 });
 
+var button3 = new Button({ //creates by button to play
+    x: 13,
+    y: 345,
+    label: "     Back",
+    onClick: function(){
+        Screen = 0;
+    }
+});
+
+var button4 = new Button({ //creates by button to play
+    x: 274,
+    y: 347,
+    label: "More Rules",
+    onClick: function(){
+        Screen = 2;
+    }
+});
+
+var button5 = new Button({ //creates by button to play
+    x: 13,
+    y: 10,
+    label: "     Back",
+    onClick: function(){
+        Screen = 1;
+    }
+});
 
 
 mouseClicked = function() { //This makes it so everytime I click within the parameters given it will take us to level 1
@@ -330,8 +329,10 @@ mouseClicked = function() { //This makes it so everytime I click within the para
     
 
 };
-var startScreen = function(){
-    background(90, 224, 121);
+
+var titleScreen = function(){
+    
+        background(90, 224, 121);
         fill(217, 4, 4);
         textSize(47);
         text("BlackJack",32,24);
@@ -342,15 +343,15 @@ var startScreen = function(){
         noStroke();
         drawBitmoji(19,206,63);
         drawBitmoji2(296,151,79);
-        button4.draw();
-        button5.draw();
-         noStroke();
+        button1.draw();
+        button2.draw();
+        noStroke();
         drawSpade(x+110,y+170);
         drawClub(x-97,y+90);
-       image(getImage("space/healthheart"), 225, 206, 24, 24);
-       drawDiamond2(165,290);
-};
+        image(getImage("space/healthheart"), 225, 206, 24, 24);
+        drawDiamond2(165,290);
     
+};
 
 var rulePage1 = function(){
     background(188, 230, 245);
@@ -370,8 +371,8 @@ var rulePage1 = function(){
          text("If you go over 21 you bust and the dealer wins regardless", 10, 290);
          text("of the dealer's hand", 10, 310);
 
-        button1.draw();
-        button2.draw();
+        button3.draw();
+        button4.draw();
 };
 
 var rulePage2 = function(){
@@ -388,18 +389,42 @@ var rulePage2 = function(){
          text("Doubling is like a hit, only the bet is doubled and you", 10, 255);
          text("only get one more card", 10, 275); 
          
-         button3.draw();
-         button4.draw();
+         button1.draw();
+         button5.draw();
 };
 
+var createTable = function() {
+  fill(97, 4, 8);
+  arc(200, 68, 387, 516, 0, 180);
+  fill(15, 122, 5);
+  arc(200, 68, 338, 467, 0, 180);
+  fill(0,0,0);
+  ellipse(20, 97, 18, 18);
+  ellipse(34, 164, 18, 18);
+  ellipse(59, 221, 18, 18);
+  ellipse(98, 271, 18, 18);
+  ellipse(157, 306, 18, 18);
+  ellipse(232, 309, 18, 18);
+  ellipse(380, 97, 18, 18);
+  ellipse(367, 164, 18, 18);
+  ellipse(343, 221, 18, 18);
+  ellipse(302, 271, 18, 18);
+  textSize(20);
+  text("Dealer", 170, 92);
+    
+};
 
 draw = function() {
-    if (Screen === 0){
-        startScreen();  
-    }
-    
+     if(Screen === 0) {
+         
+         titleScreen();
+         
+     }
+     
      if(Screen === 1) {
+         
          rulePage1();
+         
      }
         
      if(Screen === 2) {
@@ -407,6 +432,9 @@ draw = function() {
          rulePage2();
 
      }
+     if(Screen === 3){
+         background(255,255,255);
+         createTable();
+     }
      };
-
 
