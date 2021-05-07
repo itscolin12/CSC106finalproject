@@ -1,5 +1,33 @@
-var Screen = 0;
+//GLOBAL VARIABLES
+ 
+ var x=100;
 
+ var y=100;
+ 
+ var Screen=0;
+ 
+ var playerHand1 = 0;
+ var playerHand2= 0;
+ var dealerHand1 = 0;
+ var dealerHand2 = 0;
+ var dealerHand3 = 0;
+ var newCard = 0;
+ //boolean to allow hit/flip for dealer and player when values are true
+ var hit = false;
+ var dealerHit = false;
+ var dealerFlip = false;
+ 
+ //all of these are used to randomize the cards drawn at each drawing
+ var playerFirstDealt =round(random(0.5, 51.5));
+ var playerSecondDealt =round(random(0.5, 51.5));
+  var dealerFirstDealt= round(random(0.5, 51.5));
+  var dealerSecondDealt= round(random(0.5, 51.5));
+   var dealerThirdDealt= round(random(0.5, 51.5));
+ var shuffleHit = round(random(0.5, 51.5));
+ 
+ 
+//bitmoji and card code
+{
 var drawBody = function(x,y,bitmojiHeight){
 var p = bitmojiHeight/100;
 fill(0, 0, 0);// shirt color
@@ -67,55 +95,27 @@ var drawClub = function(x,y){
 ellipse(x+158,y+114,9,9);
 ellipse(x+162,y+108,9,9);
 rect(x+160,y+109,3,13);};
-
-var x=100;
-
- var y=100;
-
-var cardValue = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
-
-
-var drawFaceClubCard = function (x,y){
+var drawClubCard = function (x,y){
 rect(x+100,y+100,74,110,10);
 fill(0,0,0);
 textSize(20);
-text(this.cardValue,x+108,y+123);
-text(this.cardValue,x+158,y+203);
+text(this.value,x+108,y+123);
+text(this.value,x+158,y+203);
 drawClub(x,y);
 drawClub(x+-48,y+84);
 drawBitmoji(x+109,y+131,30);
 };
 
-var drawFaceSpadeCard = function (x,y){
-rect(x+100,y+100,74,110,10);
-fill(0,0,0);
-textSize(20);
-text(this.cardValue,x+108,y+123);
-text(this.cardValue,x+158,y+203);
-drawSpade(x+211,y+172);
-drawSpade(x+157,y+241);
-drawBitmoji(x+113,y+131,27);
-};
-
-
 var drawSpadeCard = function (x,y){
 rect(x+100,y+100,74,110,10);
 fill(0,0,0);
 textSize(20);
-text(this.cardValue,x+108,y+123);
-text(this.cardValue,x+158,y+203);
-drawSpade(x+185,y+202);
+text(this.value,x+108,y+123);
+text(this.value,x+158,y+203);
+drawSpade(x+211,y+172);
+drawSpade(x+157,y+241);
+drawBitmoji(x+113,y+131,27);
 };
-
-var drawClubCard = function (x,y) {
-rect(x+100,y+100,74,110,10);
-fill(0,0,0);
-textSize(20);
-text(this.cardValue,x+108,y+123);
-text(this.cardValue,x+158,y+203);
-drawClub(x+-25,y+42);
-};
-
 
 
 var drawFace2=function(bodyX,bodyY,h){
@@ -195,17 +195,17 @@ var drawBitmoji2=function(bodyX,bodyY,h){
 };
 
 var drawHeart = function(x,y){
-    image(getImage("space/healthheart"), x+66, x+5, 15, 15);
-    image(getImage("space/healthheart"), x+14, x+91, 15, 15);
+    image(getImage("space/healthheart"), x+66, y+5, 15, 15);
+    image(getImage("space/healthheart"), x+14, y+91, 15, 15);
 };
 
-var drawFaceHeartCard = function (x,y){
+var drawHeartCard = function (x,y){
 rect(x+100,y+100,74,110,10);
 fill(0,0,0);
 textSize(20);
 fill(255, 0, 0);
-text(this.cardValue,x+108,y+123);
-text(this.cardValue,x+158,y+203);
+text(this.value,x+108,y+123);
+text(this.value,x+158,y+203);
 drawHeart(x,y);
 drawHeart(x+-48,y+84);
 drawBitmoji2(x+119,y+106,37);
@@ -221,23 +221,781 @@ var drawDiamond = function(x,y){
 
 var drawDiamond2 = function(x,y){
     fill(255, 0, 0);
-    triangle(x+76, y+-3, x+83, y+11, x+69, y+11);
-    triangle(x+76, y+24, x+83, y+11, x+69,y+11);
+    triangle(x+76, y+03, x+80, y+11, x+72, y+11);
+    triangle(x+76, y+19, x+80, y+11, x+72,y+11);
 };
 
 
-var drawFaceDiamondCard = function (x,y){
+var drawDiamondCard = function (x,y){
 rect(x+100,y+100,74,110,10);
 fill(0,0,0);
 textSize(20);
 fill(255, 0, 0);
-text(this.cardValue,x+108,y+123);
-text(this.cardValue,x+158,y+203);
+text(this.value,x+108,y+123);
+text(this.value,x+158,y+203);
 drawDiamond(x,y);
 drawDiamond(x+-48,y+84);
 drawBitmoji2(x+119,y+108,37);
 };
+}
 
+
+// flipped card for the dealer
+var flippedCard = function(x,y){
+      fill(219, 28, 28);
+      noStroke();
+   rect(x+100,y+100,74,110,10);
+   fill(255,255,255);
+   rect(x+106,y+103,61,101,8);
+fill(0,0,0);
+
+image(getImage( "space/star"),x+110,y+123,55,58);
+};
+
+
+// all of the cards variable names are what cards they are
+{ // ALL CLUBS CARDS
+ var aceClub = function(x,y){
+      fill(255,255,255);
+      noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("A",x+108,y+102);
+    text("A",x+158,y+185);
+drawClub(x,y);
+drawClub(x+-48,y+84);
+    drawBitmoji(x+109,y+131,30); 
+  
+ };
+ 
+// 2 of clubs 
+  var twoClub = function(x,y){
+      fill(255,255,255);
+      noStroke();
+   
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("2",x+108,y+102);
+    text("2",x+158,y+185);
+    drawClub(x,y);
+    drawClub(x+-48,y+84);
+    drawBitmoji(x+109,y+131,30);  
+    
+ };
+ 
+ // three of clubs
+  var threeClub = function(x,y){
+      fill(255,255,255);
+      noStroke();
+  rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+text("3",x+108,y+102);
+    text("3",x+158,y+185);
+drawClub(x,y);
+drawClub(x+-48,y+84);
+drawBitmoji(x+109,y+131,30);  
+
+ };
+ 
+ //four of clubs
+  var fourClub = function(x,y){
+      fill(255,255,255);
+      noStroke();
+   rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+ text("4",x+108,y+102);
+    text("4",x+158,y+185);
+drawClub(x,y);
+drawClub(x+-48,y+84);
+drawBitmoji(x+109,y+131,30); 
+
+ };
+ 
+ //five of clubs
+  var fiveClub = function(x,y){
+      fill(255,255,255);
+      noStroke();
+   rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+text("5",x+108,y+102);
+    text("5",x+158,y+185);
+drawClub(x,y);
+drawClub(x+-48,y+84);
+drawBitmoji(x+109,y+131,30);  
+
+ };
+ 
+ 
+  var sixClub = function(x,y){
+      fill(255,255,255);
+      noStroke();
+   rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+  text("6",x+108,y+102);
+    text("6",x+158,y+185);
+drawClub(x,y);
+drawClub(x+-48,y+84);
+drawBitmoji(x+109,y+131,30); 
+
+ };
+ 
+ 
+  var sevenClub = function(x,y){
+      fill(255,255,255);
+      noStroke();
+      fill(255,255,255);
+      noStroke();
+   rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+text("7",x+108,y+102);
+    text("7",x+158,y+185);
+drawClub(x,y);
+drawClub(x+-48,y+84);
+drawBitmoji(x+109,y+131,30); 
+
+ };
+ 
+ 
+  var eightClub = function(x,y){
+      fill(255,255,255);
+      noStroke();
+   rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+   text("8",x+108,y+102);
+    text("8",x+158,y+185);
+drawClub(x,y);
+drawClub(x+-48,y+84);
+drawBitmoji(x+109,y+131,30);  
+return 8;
+ };
+ 
+ 
+  var nineClub = function(x,y){
+      fill(255,255,255);
+      noStroke();
+   rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+ text("9",x+108,y+102);
+    text("9",x+158,y+185);
+drawClub(x,y);
+drawClub(x+-48,y+84);
+drawBitmoji(x+109,y+131,30); 
+
+ };
+ 
+ 
+  var tenClub = function(x,y){
+      fill(255,255,255);
+      noStroke();
+   rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+  text("10",x+108,y+102);
+    text("10",x+147,y+185);
+drawClub(x,y);
+drawClub(x+-48,y+84);
+drawBitmoji(x+109,y+131,30); 
+return 10;
+ };
+ 
+ 
+  var jackClub = function(x,y){
+      fill(255,255,255);
+      noStroke();
+   rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+ text("J",x+108,y+102);
+    text("J",x+158,y+185);
+drawClub(x,y);
+drawClub(x+-48,y+84);
+drawBitmoji(x+109,y+131,30);  
+ };
+ 
+  var queenClub = function(x,y){
+      fill(255,255,255);
+      noStroke();
+   rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+  text("Q",x+108,y+102);
+    text("Q",x+158,y+185);
+drawClub(x,y);
+drawClub(x+-48,y+84);
+drawBitmoji(x+109,y+131,30);  
+ };
+ 
+ 
+  var kingClub = function(x,y){
+      fill(255,255,255);
+      noStroke();
+   rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+    text("K",x+108,y+102);
+    text("K",x+158,y+185);
+drawClub(x,y);
+drawClub(x+-48,y+84);
+drawBitmoji(x+109,y+131,30);  
+ };
+ 
+ 
+ 
+ 
+ // ALL SPADES CARDS 
+ var aceSpade = function(x,y){
+     
+      fill(255,255,255);
+      noStroke();
+     rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+text("A",x+108,y+102);
+    text("A",x+158,y+185);
+drawSpade(x+211,y+172);
+drawSpade(x+157,y+241);
+drawBitmoji(x+113,y+131,27);
+return 11;
+};
+
+var twoSpade = function(x,y){
+      fill(255,255,255);
+      noStroke();
+     rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+ text("2",x+108,y+102);
+    text("2",x+158,y+185);
+drawSpade(x+211,y+172);
+drawSpade(x+157,y+241);
+drawBitmoji(x+113,y+131,27);
+
+};
+
+
+ var threeSpade = function(x,y){
+      fill(255,255,255);
+      noStroke();
+     rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+ text("3",x+108,y+102);
+    text("3",x+158,y+185);
+drawSpade(x+211,y+172);
+drawSpade(x+157,y+241);
+drawBitmoji(x+113,y+131,27);
+
+};
+
+
+ var fourSpade = function(x,y){
+      fill(255,255,255);
+      noStroke();
+     rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+ text("4",x+108,y+102);
+    text("4",x+158,y+185);
+drawSpade(x+211,y+172);
+drawSpade(x+157,y+241);
+drawBitmoji(x+113,y+131,27); 
+
+};
+
+
+ var fiveSpade = function(x,y){
+      fill(255,255,255);
+      noStroke();
+     rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+ text("5",x+108,y+102);
+    text("5",x+158,y+185);
+drawSpade(x+211,y+172);
+drawSpade(x+157,y+241);
+drawBitmoji(x+113,y+131,27);
+
+};
+
+
+ var sixSpade = function(x,y){
+      fill(255,255,255);
+      noStroke();
+     rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+text("6",x+108,y+102);
+    text("6",x+158,y+185);
+drawSpade(x+211,y+172);
+drawSpade(x+157,y+241);
+drawBitmoji(x+113,y+131,27);
+
+};
+
+
+ var sevenSpade = function(x,y){
+      fill(255,255,255);
+      noStroke();
+     rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+ text("7",x+108,y+102);
+    text("7",x+158,y+185);
+drawSpade(x+211,y+172);
+drawSpade(x+157,y+241);
+drawBitmoji(x+113,y+131,27);
+
+};
+
+
+ var eightSpade = function(x,y){
+      fill(255,255,255);
+      noStroke();
+     rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+   text("8",x+108,y+102);
+    text("8",x+158,y+185);
+drawSpade(x+211,y+172);
+drawSpade(x+157,y+241);
+drawBitmoji(x+113,y+131,27);
+
+};
+
+
+ var nineSpade = function(x,y){
+      fill(255,255,255);
+      noStroke();
+     rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+text("9",x+108,y+102);
+    text("9",x+158,y+185);
+drawSpade(x+211,y+172);
+drawSpade(x+157,y+241);
+drawBitmoji(x+113,y+131,27);
+
+};
+
+
+ var tenSpade = function(x,y){
+      fill(255,255,255);
+      noStroke();
+     rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+ text("10",x+108,y+102);
+    text("10",x+147,y+185);
+drawSpade(x+211,y+172);
+drawSpade(x+157,y+241);
+drawBitmoji(x+113,y+131,27); 
+};
+
+
+ var jackSpade = function(x,y){
+      fill(255,255,255);
+      noStroke();
+     rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+ text("J",x+108,y+102);
+    text("J",x+158,y+185);
+drawSpade(x+211,y+172);
+drawSpade(x+157,y+241);
+drawBitmoji(x+113,y+131,27); 
+};
+
+
+ var queenSpade = function(x,y){
+      fill(255,255,255);
+      noStroke();
+     rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+text("Q",x+108,y+102);
+    text("Q",x+158,y+185);
+drawSpade(x+211,y+172);
+drawSpade(x+157,y+241);
+drawBitmoji(x+113,y+131,27); 
+};
+
+
+ var kingSpade = function(x,y){
+      fill(255,255,255);
+      noStroke();
+     rect(x+100,y+100,74,110,10);
+fill(0,0,0);
+textSize(20);
+  text("K",x+108,y+102);
+    text("K",x+158,y+185);
+drawSpade(x+211,y+172);
+drawSpade(x+157,y+241);
+drawBitmoji(x+113,y+131,27);
+};
+
+
+
+//ALL HEARTS CARDS
+ 
+ var aceHeart = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("A",x+108,y+102);
+    text("A",x+158,y+185);
+    drawHeart(x+88,y+100);
+    drawBitmoji2(x+123,y+114,30);
+    
+};
+
+var twoHeart = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("2",x+108,y+102);
+    text("2",x+158,y+185);
+    drawHeart(x+88,y+100);
+    drawBitmoji2(x+123,y+114,30);
+    
+};
+
+var threeHeart = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("3",x+108,y+102);
+    text("3",x+158,y+185);
+    drawHeart(x+88,y+100);
+    drawBitmoji2(x+123,y+114,30);
+    
+};
+
+var fourHeart = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("4",x+108,y+102);
+    text("4",x+158,y+185);
+    drawHeart(x+88,y+100);
+    drawBitmoji2(x+123,y+114,30);
+    
+};
+
+var fiveHeart = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("5",x+108,y+102);
+    text("5",x+158,y+185);
+    drawHeart(x+88,y+100);
+    drawBitmoji2(x+123,y+114,30);
+   
+};
+
+var sixHeart = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("6",x+108,y+102);
+    text("6",x+158,y+185);
+    drawHeart(x+88,y+100);
+    drawBitmoji2(x+123,y+114,30);
+   
+};
+
+var sevenHeart = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("7",x+108,y+102);
+    text("7",x+158,y+185);
+    drawHeart(x+88,y+100);
+    drawBitmoji2(x+123,y+114,30);
+   
+};
+
+var eightHeart = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("8",x+108,y+102);
+    text("8",x+158,y+185);
+    drawHeart(x+88,y+100);
+    drawBitmoji2(x+123,y+114,30);
+   
+};
+
+var nineHeart = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("9",x+108,y+102);
+    text("9",x+158,y+185);
+    drawHeart(x+88,y+100);
+    drawBitmoji2(x+123,y+114,30);
+    
+};
+
+var tenHeart = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("10",x+108,y+102);
+    text("10",x+147,y+185);
+    drawHeart(x+88,y+100);
+    drawBitmoji2(x+123,y+114,30); 
+};
+
+var jackHeart = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("J",x+108,y+102);
+    text("J",x+158,y+185);
+    drawHeart(x+88,y+100);
+    drawBitmoji2(x+123,y+114,30); 
+};
+
+var queenHeart = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("Q",x+108,y+102);
+    text("Q",x+158,y+185);
+    drawHeart(x+88,y+100);
+    drawBitmoji2(x+123,y+114,30); 
+};
+
+var kingHeart = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("K",x+108,y+102);
+    text("K",x+158,y+185);
+    drawHeart(x+88,y+100);
+    drawBitmoji2(x+123,y+114,30); 
+};
+
+
+
+
+
+//ALL DIAMONDS CARDS
+ 
+var aceDiamond = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("A",x+108,y+102);
+    text("A",x+158,y+185);
+    drawDiamond(x+89,y+100);
+    drawBitmoji2(x+123,y+114,30);
+   
+};
+
+var twoDiamond= function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("2",x+108,y+102);
+    text("2",x+158,y+185);
+    drawDiamond(x+89,y+100);
+    drawBitmoji2(x+123,y+114,30);
+    
+};
+
+var threeDiamond = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("3",x+108,y+102);
+    text("3",x+158,y+185);
+    drawDiamond(x+89,y+100);
+    drawBitmoji2(x+123,y+114,30);
+    
+};
+
+var fourDiamond = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("4",x+108,y+102);
+    text("4",x+158,y+185);
+    drawDiamond(x+89,y+100);
+    drawBitmoji2(x+123,y+114,30);
+   
+};
+
+var fiveDiamond = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("5",x+108,y+102);
+    text("5",x+158,y+185);
+    drawDiamond(x+89,y+100);
+    drawBitmoji2(x+123,y+114,30);
+    
+};
+
+var sixDiamond = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("6",x+108,y+102);
+    text("6",x+158,y+185);
+    drawDiamond(x+89,y+100);
+    drawBitmoji2(x+123,y+114,30);
+    
+};
+
+var sevenDiamond = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("7",x+108,y+102);
+    text("7",x+158,y+185);
+    drawDiamond(x+89,y+100);
+    drawBitmoji2(x+123,y+114,30);
+   
+};
+
+var eightDiamond = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("8",x+108,y+102);
+    text("8",x+158,y+185);
+    drawDiamond(x+89,y+100);
+    drawBitmoji2(x+123,y+114,30);
+    
+};
+
+var nineDiamond = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("9",x+108,y+102);
+    text("9",x+158,y+185);
+    drawDiamond(x+89,y+100);
+    drawBitmoji2(x+123,y+114,30);
+   
+};
+
+var tenDiamond = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("10",x+108,y+102);
+    text("10",x+147,y+185);
+    drawDiamond(x+89,y+100);
+    drawBitmoji2(x+123,y+114,30); 
+};
+
+var jackDiamond = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("J",x+108,y+102);
+    text("J",x+158,y+185);
+    drawDiamond(x+89,y+100);
+    drawBitmoji2(x+123,y+114,30); 
+};
+
+var queenDiamond = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("Q",x+108,y+102);
+    text("Q",x+158,y+185);
+    drawDiamond(x+89,y+100); 
+    drawBitmoji2(x+123,y+114,30); 
+};
+
+var kingDiamond = function(x,y){
+    noStroke();
+    fill(255, 255, 255);
+    rect(x+100,y+100,74,110,10);
+    fill(0,0,0);
+    textSize(20);
+    text("K",x+108,y+102);
+    text("K",x+158,y+185);
+    drawDiamond(x+89,y+100);
+    drawBitmoji2(x+123,y+114,30); 
+};
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ // array for the full deck of cards
+var deck =[aceClub,twoClub,threeClub,fourClub,fiveClub,sixClub,sevenClub,eightClub,nineClub,tenClub,jackClub,queenClub,kingClub,aceSpade,twoSpade,threeSpade,fourSpade,fiveSpade,sixSpade,sevenSpade,eightSpade,nineSpade,tenSpade,jackSpade,queenSpade,kingSpade,aceHeart,twoHeart,threeHeart,fourHeart,fiveHeart,sixHeart,sevenHeart,eightHeart,nineHeart,tenHeart,jackHeart,queenHeart,kingHeart,aceDiamond,twoDiamond,threeDiamond,fourDiamond,fiveDiamond,sixDiamond,sevenDiamond,eightDiamond,nineDiamond,tenDiamond,jackDiamond,queenDiamond,kingDiamond];
+
+//button functions & mouse clicked
+{
 
 var Button = function(config) { //constructor function for my buttons
     this.x = config.x || 0;
@@ -275,85 +1033,179 @@ Button.prototype.useMouseClick = function() { //mehtod to enable us to click the
 
 var button1 = new Button({ //creates by button to play
     x: 146,
-    y: 347,
+    y: 286,
     label: "Begin Game",
     onClick: function(){
+        if (Screen === 0 || Screen === 2){
         Screen = 3;
+        }
     }
 });
 
-var button2 = new Button({
+var button2 = new Button({ // rules button
     x: 271,
     y: 23,
     label: "     Rules",
     onClick: function(){
-        Screen = 1;
+        if (Screen === 0){
+        Screen = 1;}
     }
 });
 
-var button3 = new Button({ //creates by button to play
+var button3 = new Button({ //creates by button to go back to home screen
     x: 13,
     y: 345,
     label: "     Back",
     onClick: function(){
-        Screen = 0;
-    }
+        if (Screen===1){Screen = 0;
+    }}
 });
 
-var button4 = new Button({ //creates by button to play
+var button4 = new Button({ //creates by button to show more rules
     x: 274,
     y: 347,
     label: "More Rules",
     onClick: function(){
-        Screen = 2;
-    }
+      if (Screen===1){  Screen = 2;
+    }}
 });
 
-var button5 = new Button({ //creates by button to play
+var button5 = new Button({ //creates by button to go back to rules
     x: 13,
     y: 10,
     label: "     Back",
     onClick: function(){
-        Screen = 1;
+      if (Screen===2){  Screen = 1;
+    }}
+});
+
+var button6 = new Button({ //creates by button to hit and draw card for player
+    x: 253,
+    y: 207,
+    label: "       HIT",
+    onClick: function(){ if (Screen === 3){
+       var newCard = deck[shuffleHit](55,102);
+       hit = true;
+       
+    }
     }
 });
 
+var button7 = new Button({ //creates by button to stand to signal that player is done to dealer
+    x: 253,
+    y: 256,
+    label: "    STAND",
+    onClick: function(){
+          
+    }
+});
 
-mouseClicked = function() { //This makes it so everytime I click within the parameters given it will take us to level 1
+var button8 = new Button ({ // flips over dealers turned card
+    x: 253,
+    y:5,
+    label:"Dealer Flip",
+    onClick:function(){
+        var dealerHand2 =deck[dealerSecondDealt](80,-30);
+        dealerFlip = true;
+    }
+});
+
+var button9 = new Button ({ // allows dealer to hit and draw new card
+    x: 130,
+    y:5,
+    label:"Dealer   Hit",
+    onClick:function(){
+        var dealerHand3 =deck[dealerThirdDealt](169,-30);
+        dealerHit = true;
+    }
+});
+
+var button10 = new Button ({ // select this button for player win screen
+    x: 8,
+    y:343,
+    label:"Player Win",
+    onClick:function(){
+        if (Screen===3){ Screen = 4;}
+    }
+});
+
+var button11 = new Button ({ // select this button for dealer win screen
+    x: 142,
+    y:343,
+    label:"Dealer Win",
+    onClick:function(){
+        if (Screen===3){ Screen = 5;}
+    }
+});
+
+var button12 = new Button ({ // select this button when there is a tie or "push"
+    x: 272,
+    y:343,
+    label:"    Push",
+    onClick:function(){
+        if (Screen===3){ Screen = 6;}
+    }
+});
+
+mouseClicked = function() { //makes it so that when buttons are clicked they are able to function
     
     button1.useMouseClick();
     button2.useMouseClick();
     button3.useMouseClick();
     button4.useMouseClick();
     button5.useMouseClick();
+    button6.useMouseClick();
+    button7.useMouseClick();
+    button8.useMouseClick();
+    button9.useMouseClick();
+    button10.useMouseClick();
+    button11.useMouseClick();
+    button12.useMouseClick();
+   
     
 
 };
+}
 
-var titleScreen = function(){
-    
+
+
+// SCREEN CODE
+{
+var titleScreen = function(){// title screen shows the game and rules 
+                 for (var i = 0; i <= 20; i++){
+                fill(255, 255, 255);
+                rect(i*121,-3,-73,496);
+                    }
+         noStroke();
+         for (var i = -65; i <= 45; i++){
+        fill(255, 0, 38);
+        ellipse(i*14,394,21,58);
+        fill(255, 255, 255);
+        ellipse(i*79,371,115,18);
+}
         background(90, 224, 121);
         fill(217, 4, 4);
         textSize(47);
-        text("BlackJack",32,24);
+        text("BlackJack",20,3);
         textSize(24);
+        text("For 1-2 Players",20,53);
         fill(0,0,0);
-        text("By: Colin Gallagher ", 51, 96);
-        text("and Steven Wasserman",51,127);
+        text("By: Colin Gallagher ", 21, 126);
+        text("and Steven Wasserman",14,154);
         noStroke();
-        drawBitmoji(19,206,63);
-        drawBitmoji2(296,151,79);
+        drawBitmoji(19,228,63);
+        drawBitmoji2(296,168,79);
         button1.draw();
         button2.draw();
         noStroke();
         drawSpade(x+110,y+170);
-        drawClub(x-97,y+90);
+        drawClub(x-97,y+51);
         image(getImage("space/healthheart"), 225, 206, 24, 24);
-        drawDiamond2(165,290);
+        drawDiamond2(165,252);
     
 };
 
-var rulePage1 = function(){
+var rulePage1 = function(){ // shows first list of rules
     background(188, 230, 245);
          fill(0, 0, 0);
          textSize(48);
@@ -361,10 +1213,10 @@ var rulePage1 = function(){
          fill(0,0,0);
          textSize(15);
          text("The goal of blackjack is to beat the dealer's hand without", 10, 60);
-         text("going over 21", 10, 80);
-         text("Face cards are worth 10", 10, 111);
-         text("Aces are worth 1 or 11 whichever makes a better hand", 10, 146); 
-         text("Each player starts with two cards one of the dealer's cards", 10, 178);
+         text("going over 21, player goes first", 10, 80);
+         text("Face cards are worth 10, Aces are 11", 10, 111);
+         text("One player plays as player, other plays as dealer ", 10, 146); 
+         text("Player starts with two cards one of the dealer's cards", 10, 178);
          text("is hidden until the end", 10, 197);  
          text("To 'Hit' is to ask for another card.", 10, 230); 
          text("To 'Stand' is to hold your total and end your turn.", 10, 260);
@@ -375,7 +1227,7 @@ var rulePage1 = function(){
         button4.draw();
 };
 
-var rulePage2 = function(){
+var rulePage2 = function(){ // rules continued
          background(188, 230, 245);
          fill(0, 0, 0);
          textSize(48);
@@ -384,16 +1236,15 @@ var rulePage2 = function(){
          textSize(15);
          text("If you are dealt 21 from the start (Ace & 10), you got", 10, 90);
          text("a blackjack", 10, 110);
-         text("Blackjack means you win 1.5 the amount of your bet", 10, 153);
-         text("Dealer will hit until his/her cards total 17 or higher", 10, 204); 
-         text("Doubling is like a hit, only the bet is doubled and you", 10, 255);
-         text("only get one more card", 10, 275); 
+         text("Each player hits once or none after their first two cards", 10, 153);
+         text("Dealer will stand on 17 or higher", 10, 204); 
+          
          
          button1.draw();
          button5.draw();
 };
 
-var createTable = function() {
+var createTable = function() { // creates a picture of a blackjack table to play on
   fill(97, 4, 8);
   arc(200, 68, 387, 516, 0, 180);
   fill(15, 122, 5);
@@ -410,11 +1261,62 @@ var createTable = function() {
   ellipse(343, 221, 18, 18);
   ellipse(302, 271, 18, 18);
   textSize(20);
-  text("Dealer", 170, 92);
+    text("Dealer", 14, 11);
+    
+};
+}
+
+var gameScene = function(){ // this variable shows the scene for screen 3 which is the game screen
+  
+         background(163, 209, 187);
+         noStroke();
+         for (var i = -65; i <= 45; i++){
+        fill(255, 0, 38);
+        ellipse(i*12,64,7,39);
+        fill(0, 0, 0);
+        ellipse(i*95,64,115,18);}
+         createTable();
+         button6.draw();
+         button7.draw();
+         button8.draw();
+         button9.draw();
+         button10.draw();
+         button11.draw();
+         button12.draw();
+         flippedCard(80,-30);
+         playerHand1 = deck[playerFirstDealt](-2,102);
+         playerHand2 = deck[playerSecondDealt](22,102);
+         dealerHand1 = deck[dealerFirstDealt](-5,-30);
+         if(hit === true){var newCard = deck[shuffleHit](55,102);}
+         if(dealerHit === true){var dealerHand3 =deck[dealerThirdDealt](169,-30);}
+         if(dealerFlip === true){var dealerHand2 =deck[dealerSecondDealt](80,-30);}
     
 };
 
-draw = function() {
+var lostScene = function(){ // screen shows when dealer wins
+  background(255, 0, 0);
+  textSize(50);
+  text("Dealer Won ", 58, 112);
+  drawBitmoji2(147, 137, 100);
+};
+
+var wonScene = function(){ // screen shows when player wins
+  background(0, 255, 38);
+  textSize(50);
+  text("Player Won ", 73, 110);
+  drawBitmoji(132, 193, 80);
+};
+
+var tieScene = function(){ // screen shows when there is a tie or push
+  background(20, 12, 242);
+  textSize(50);
+  text("Push/Tie !!!", 77, 207);
+};
+
+
+// DRAWING SCREEN CODE
+{
+draw = function() { // each of the following if statements are to create a scene if the the screen is equal to the correct number
      if(Screen === 0) {
          
          titleScreen();
@@ -433,8 +1335,19 @@ draw = function() {
 
      }
      if(Screen === 3){
-         background(255,255,255);
-         createTable();
+        
+        gameScene();     
      }
+     if (Screen===4){
+         wonScene();
+         
+     }
+         
+    if (Screen === 5){
+     lostScene();   
+    }
+    if (Screen=== 6){
+     tieScene();   
+    }
      };
-
+}
